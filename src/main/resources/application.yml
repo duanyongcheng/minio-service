@@ -1,0 +1,17 @@
+server:
+  port: 8099
+
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://124.222.12.87:3306/babary
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+
+
+minio:
+  minioUrl: http://124.222.12.87:9000
+  assessKey: babry
+  secretKey: babary123
+  bucket: babry
