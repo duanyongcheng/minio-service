@@ -7,6 +7,10 @@ spring:
     password: 123456
     url: jdbc:mysql://124.222.12.87:3306/babary
     driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 mybatis-plus:
 
 

@@ -1,16 +1,25 @@
 package com.babary.minioservice.utils;
 
+import cn.hutool.core.date.DateUtil;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
-@Service
+@Component
 @Slf4j
 public class MinioClientUtil {
 
@@ -39,9 +48,9 @@ public class MinioClientUtil {
                 boolean found = this.minioClient.bucketExists(
                         BucketExistsArgs.builder().bucket(this.bucket).build()
                 );
-                if (found){
+                if (found) {
                     log.info("bucket is found");
-                }else {
+                } else {
                     this.minioClient.makeBucket(
                             MakeBucketArgs.builder().bucket(this.bucket).build()
                     );
@@ -51,6 +60,35 @@ public class MinioClientUtil {
                 System.out.println("error");
             }
         }
+    }
+
+    public void upload(File file) throws Exception{
+        FileInputStream fileInputStream = new FileInputStream(file);
+        PutObjectArgs putObject =
+                PutObjectArgs.builder()
+                        .bucket(bucket)
+                        .object(file.getPath())
+                        .stream(fileInputStream, fileInputStream.available(), -1L)
+                        .build();
+        this.minioClient.putObject(putObject);
+    }
+
+
+    public void upload(MultipartFile file) throws Exception {
+        PutObjectArgs putObject =
+                PutObjectArgs.builder()
+                        .bucket(bucket)
+                        .object(file.getOriginalFilename())
+                        .stream(file.getInputStream(), file.getSize(), -1L)
+                        .contentType(file.getContentType())
+                        .build();
+        this.minioClient.putObject(putObject);
+    }
+
+
+    private String getObjectName(String path){
+        String now = DateUtil.now();
+        return now + path;
     }
 
 }
