@@ -4,10 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.babary.minioservice.model.FileMiddlePathEnum;
-import io.minio.BucketExistsArgs;
-import io.minio.MakeBucketArgs;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import io.minio.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.FileNameUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +12,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 @Component
@@ -39,6 +41,13 @@ public class MinioClientUtil {
     private String bucket;
 
     private MinioClient minioClient;
+
+    public static String clearFilePath(String path) {
+        if (path.contains(MINIO_PROTOCOL)) {
+            path = path.replace(MINIO_PROTOCOL, "");
+        }
+        return path;
+    }
 
     @PostConstruct
     public void initClient() {
@@ -77,16 +86,16 @@ public class MinioClientUtil {
         this.minioClient.putObject(putObject);
     }
 
-
     /**
      * 上传文件并返回文件路径
-     * @param file 文件
+     *
+     * @param file               文件
      * @param fileMiddlePathEnum 中间奴鲁
      * @return 路径
      * @throws Exception 异常
      */
     public String upload(MultipartFile file, FileMiddlePathEnum fileMiddlePathEnum) throws Exception {
-        String fileName = IdUtil.simpleUUID() + getExtension(file);
+        String fileName = IdUtil.simpleUUID() + "." + getExtension(file);
         String path = fileMiddlePathEnum.getPath() + fileName;
         String objectName = getObjectName(path);
         PutObjectArgs putObject =
@@ -100,10 +109,16 @@ public class MinioClientUtil {
         return MINIO_PROTOCOL + objectName;
     }
 
-
     private String getObjectName(String path) {
-        String now = DateUtil.now();
+        String now = DateUtil.today();
         return now + path;
+    }
+
+    private boolean isMinio(String path) {
+        if (StrUtil.isEmptyIfStr(path)) {
+            return false;
+        }
+        return path.startsWith(MINIO_PROTOCOL);
     }
 
     /**
@@ -120,4 +135,33 @@ public class MinioClientUtil {
         return extension;
     }
 
+    public void downloadFile(String path, HttpServletResponse response) {
+        try {
+            GetObjectResponse object = minioClient.getObject(GetObjectArgs.builder().bucket(bucket).object(path).build());
+            byte[] buf = new byte[1024];
+            int length;
+            response.reset();
+            ;
+            String filename = path.substring(path.lastIndexOf("/") + 1);
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, StandardCharsets.UTF_8));
+            response.setHeader("Accept-Ranges", "bytes");
+            response.setContentType("application/octet-stream");
+            response.setCharacterEncoding("utf-8");
+            ServletOutputStream outputStream = response.getOutputStream();
+            while ((length = object.read(buf)) > 0) {
+                outputStream.write(buf, 0, length);
+            }
+            outputStream.close();
+        } catch (Exception e) {
+            log.error(StrUtil.format("file download error ,path :{}", path));
+            response.setHeader("Content-type", "text/html;charset=UTF-8");
+            String data = "文件下载失败";
+            OutputStream op = null;
+            try {
+                op.write(data.getBytes(StandardCharsets.UTF_8));
+            } catch (Exception exception) {
+                log.error(e.getMessage());
+            }
+        }
+    }
 }

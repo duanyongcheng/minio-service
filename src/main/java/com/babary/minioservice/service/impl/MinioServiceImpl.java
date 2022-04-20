@@ -1,5 +1,6 @@
 package com.babary.minioservice.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.babary.minioservice.model.FileMiddlePathEnum;
 import com.babary.minioservice.service.IMinioService;
 import com.babary.minioservice.utils.MinioClientUtil;
@@ -22,7 +23,7 @@ public class MinioServiceImpl implements IMinioService {
     @Override
     public String upload(MultipartFile file, FileMiddlePathEnum fileMiddlePathEnum) {
         try {
-            String path = minioClientUtil.upload(file,fileMiddlePathEnum);
+            return minioClientUtil.upload(file, fileMiddlePathEnum);
         } catch (Exception e) {
             log.error(e + "");
             throw new RuntimeException(e);
@@ -31,7 +32,10 @@ public class MinioServiceImpl implements IMinioService {
 
     @Override
     public void downloadPath(String path, HttpServletResponse response) {
-
+        log.info(StrUtil.format("start to download file ,path :{}", path));
+        path = MinioClientUtil.clearFilePath(path);
+        minioClientUtil.downloadFile(path,response);
+        log.info("file download over");
     }
 
     @Override

@@ -28,7 +28,7 @@ public class MimeTypeUtils {
     }
 
     public static String getExtension(String prefix) {
-        switch (prefix) {
+        switch (prefix) {
             case IMAGE_PNG:
                 return "png";
             case IMAGE_JPG:
