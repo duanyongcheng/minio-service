@@ -1,5 +1,6 @@
 package com.babary.minioservice.service.impl;
 
+import com.babary.minioservice.model.FileMiddlePathEnum;
 import com.babary.minioservice.service.IMinioService;
 import com.babary.minioservice.utils.MinioClientUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,9 @@ public class MinioServiceImpl implements IMinioService {
     }
 
     @Override
-    public String upload(MultipartFile file) {
+    public String upload(MultipartFile file, FileMiddlePathEnum fileMiddlePathEnum) {
         try {
-            minioClientUtil.upload(file);
-            return file.getOriginalFilename();
+            String path = minioClientUtil.upload(file,fileMiddlePathEnum);
         } catch (Exception e) {
             log.error(e + "");
             throw new RuntimeException(e);

@@ -1,5 +1,6 @@
 package com.babary.minioservice.service;
 
+import com.babary.minioservice.model.FileMiddlePathEnum;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,10 +9,12 @@ public interface IMinioService {
     /**
      * 上传文件返回文件
      * 以后返回文件id
-     * @param file 文件
-     * @return 返回url
+     *
+     * @param file               文件
+     * @param fileMiddlePathEnum 文件中间目录名称
+     * @return 返回path
      */
-    String upload(MultipartFile file);
+    String upload(MultipartFile file, FileMiddlePathEnum fileMiddlePathEnum);
 
     /**
      * 根据文件路径下载文件
