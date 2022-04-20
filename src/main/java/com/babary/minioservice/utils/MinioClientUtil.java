@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Objects;
 
 @Component
 @Slf4j
@@ -64,6 +65,7 @@ public class MinioClientUtil {
         }
     }
 
+    @Deprecated
     public void upload(File file) throws Exception {
         FileInputStream fileInputStream = new FileInputStream(file);
         PutObjectArgs putObject =
@@ -113,7 +115,7 @@ public class MinioClientUtil {
     private String getExtension(MultipartFile file) {
         String extension = FileNameUtils.getExtension(file.getOriginalFilename());
         if (StrUtil.isEmptyIfStr(extension)) {
-            extension = MimeTypeUtils.getExtension(file.getContentType());
+            extension = MimeTypeUtils.getExtension(Objects.requireNonNull(file.getContentType()));
         }
         return extension;
     }
