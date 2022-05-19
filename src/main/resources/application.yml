@@ -2,17 +2,6 @@ server:
   port: 8099
 
 spring:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 124.222.12.87:8848
-        namespace: test
-  #        namespace: spring-cloud-dev
-        username: nacos
-        password: nacos
-        group: DEFAULT_GROUP
-  application:
-    name: minio-service
   datasource:
     username: root
     password: 123456
@@ -23,47 +12,6 @@ spring:
       max-file-size: 10MB
       max-request-size: 100MB
 
-
-#mybatis-plus:
-#
-#nacos:
-#  config:
-#    server-addr: 124.222.12.87:8848
-#    namespace: spring-cloud-dev
-#    username: nacos
-#    password: nacos
-#    data-id: test
-#    group: DEFAULT_GROUP
-#    # 配置文件类型
-#    type: YAML
-#    # 最大重试次数
-#    max-retry: 10
-#    # 自动刷新
-#    auto-refresh: true
-#    # 重试时间
-#    config-retry-time: 2000
-#    # 监听长轮询超时时间
-#    config-long-poll-timeout: 46000
-#    bootstrap:
-#      enable: true
-
-#  discovery:
-#    auto-register: true
-#    username: nacos
-#    password: nacos
-#    namespace: spring-cloud-dev
-#    register:
-#      clusterName: SPRINGBOOT
-#      enabled: true
-#      ephemeral: true
-#      groupName: DEFAULT_GROUP
-#      healthy: true
-#      ip: 127.0.0.1
-#      metadata:
-#        username: admin
-#      port: 8099
-#      weight: 0.6
-#      service-name: minio-service
 minio:
   minioUrl: http://124.222.12.87:9000
   assessKey: babry
