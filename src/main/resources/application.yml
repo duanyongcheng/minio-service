@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://124.222.12.87:3306/babary
+    url: jdbc:mysql://192.168.110.64:3306/minio-test
     driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
@@ -13,7 +13,7 @@ spring:
       max-request-size: 100MB
 
 minio:
-  minioUrl: http://124.222.12.87:9000
-  assessKey: babry
-  secretKey: babary123
-  bucket: babry
+  minioUrl: http://192.168.110.64:9000
+  assessKey: shZhwRiR0RCaStFIQbZL
+  secretKey: oJWoxL4clkqBly33lJ3aJlZ6rj4NMYMTdEEQTqSj
+  bucket: minio-test
