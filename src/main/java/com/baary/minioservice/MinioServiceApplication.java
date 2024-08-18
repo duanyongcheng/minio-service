@@ -1,4 +1,4 @@
-package com.babary.minioservice;
+package com.baary.minioservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

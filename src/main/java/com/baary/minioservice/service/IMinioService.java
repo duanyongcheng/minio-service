@@ -1,6 +1,6 @@
-package com.babary.minioservice.service;
+package com.baary.minioservice.service;
 
-import com.babary.minioservice.model.FileMiddlePathEnum;
+import com.baary.minioservice.model.FileMiddlePathEnum;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

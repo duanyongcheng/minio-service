@@ -1,9 +1,9 @@
-package com.babary.minioservice.utils;
+package com.baary.minioservice.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import com.babary.minioservice.model.FileMiddlePathEnum;
+import com.baary.minioservice.model.FileMiddlePathEnum;
 import io.minio.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.FileNameUtils;

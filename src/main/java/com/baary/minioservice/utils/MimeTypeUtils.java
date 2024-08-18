@@ -1,4 +1,4 @@
-package com.babary.minioservice.utils;
+package com.baary.minioservice.utils;
 
 /**
  * 获取文件类型的工具类

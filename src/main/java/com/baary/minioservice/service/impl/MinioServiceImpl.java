@@ -1,9 +1,9 @@
-package com.babary.minioservice.service.impl;
+package com.baary.minioservice.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.babary.minioservice.model.FileMiddlePathEnum;
-import com.babary.minioservice.service.IMinioService;
-import com.babary.minioservice.utils.MinioClientUtil;
+import com.baary.minioservice.model.FileMiddlePathEnum;
+import com.baary.minioservice.service.IMinioService;
+import com.baary.minioservice.utils.MinioClientUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

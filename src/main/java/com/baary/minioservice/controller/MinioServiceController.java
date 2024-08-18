@@ -1,8 +1,8 @@
-package com.babary.minioservice.controller;
+package com.baary.minioservice.controller;
 
-import com.babary.minioservice.model.FileDownloadDto;
-import com.babary.minioservice.model.FileMiddlePathEnum;
-import com.babary.minioservice.service.IMinioService;
+import com.baary.minioservice.model.FileDownloadDto;
+import com.baary.minioservice.model.FileMiddlePathEnum;
+import com.baary.minioservice.service.IMinioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

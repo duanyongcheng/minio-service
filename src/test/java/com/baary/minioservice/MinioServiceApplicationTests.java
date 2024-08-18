@@ -1,4 +1,4 @@
-package com.babary.minioservice;
+package com.baary.minioservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

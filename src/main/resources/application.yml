@@ -7,6 +7,11 @@ spring:
     password: 123456
     url: jdbc:mysql://192.168.110.64:3306/minio-test
     driver-class-name: com.mysql.cj.jdbc.Driver
+  rabbitmq:
+    host: 38.6.167.13
+    port: 5672
+    username: barry
+    password: As1171998654
   servlet:
     multipart:
       max-file-size: 10MB

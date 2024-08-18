@@ -1,4 +1,4 @@
-package com.babary.minioservice.model;
+package com.baary.minioservice.model;
 
 /**
  * 上传文件中间目录枚举

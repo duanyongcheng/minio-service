@@ -1,4 +1,4 @@
-package com.babary.minioservice.model;
+package com.baary.minioservice.model;
 
 import lombok.Data;
 
